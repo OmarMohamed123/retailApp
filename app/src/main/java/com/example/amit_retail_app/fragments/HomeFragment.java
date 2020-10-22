@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,7 +102,18 @@ RecyclerView.LayoutManager layoutManager=new GridLayoutManager(requireContext(),
 productRv.setLayoutManager(layoutManager);
 productRv.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(16),true));
 productRv.setItemAnimator(new DefaultItemAnimator());
-adapter=new ProductsRvAdapter(productsList,requireContext());
+adapter=new ProductsRvAdapter(productsList,  requireContext(),new ProductsRvAdapter.OnProductClickListener() {
+            @Override
+            public void onProductClick(View view,int position) {
+ProductsModel clickedProduct=productsList.get(position);
+Bundle bundle=new Bundle();
+bundle.putSerializable("clickedProduct",clickedProduct);
+                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_productDetailsFragment,bundle);
+            }
+        });
+
+
+
 productRv.setAdapter(adapter);
 
     }

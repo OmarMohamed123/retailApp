@@ -17,10 +17,16 @@ import java.util.List;
 public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.ProductsRvViewHolder> {
 
     private List<ProductsModel> productsList;
+    private OnProductClickListener onProductClickListener;
     private Context context;
 
-    public ProductsRvAdapter(List<ProductsModel> productsList, Context context) {
+    public interface OnProductClickListener{
+        void onProductClick(View view, int position);
+    }
+
+    public ProductsRvAdapter(List<ProductsModel> productsList,Context context, OnProductClickListener onProductClickListener ) {
         this.productsList = productsList;
+        this.onProductClickListener = onProductClickListener;
         this.context = context;
     }
 
@@ -33,7 +39,7 @@ public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.Pr
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductsRvViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ProductsRvViewHolder holder, int position) {
 
         ProductsModel productsModel=productsList.get(position);
         holder.titleTv.setText(productsModel.getTitle());
@@ -41,6 +47,12 @@ public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.Pr
         holder.detailsTv.setText(productsModel.getDetails());
         Glide.with(context).load(productsModel.getPhoto()).into(holder.productIv);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onProductClickListener.onProductClick(view,holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override

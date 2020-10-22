@@ -2,7 +2,9 @@ package com.example.amit_retail_app;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductsModel {
+import java.io.Serializable;
+
+public class ProductsModel implements Serializable {
     @SerializedName("id")
     private int productId;
 
