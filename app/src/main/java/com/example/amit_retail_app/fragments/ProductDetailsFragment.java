@@ -14,9 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.amit_retail_app.ProductsModel;
+import com.example.amit_retail_app.models.ProductsModel;
 import com.example.amit_retail_app.R;
-import com.google.android.material.button.MaterialButton;
 
 /**
  * A simple {@link Fragment} subclass.

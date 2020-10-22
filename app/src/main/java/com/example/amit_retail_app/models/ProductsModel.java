@@ -1,4 +1,4 @@
-package com.example.amit_retail_app;
+package com.example.amit_retail_app.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -48,6 +48,13 @@ public class ProductsModel implements Serializable {
         this.details = details;
         this.title = title;
         this.photo = photo;
+        this.finalPriceText = finalPriceText;
+    }
+
+
+    public ProductsModel(String details, String title, String finalPriceText) {
+        this.details = details;
+        this.title = title;
         this.finalPriceText = finalPriceText;
     }
 

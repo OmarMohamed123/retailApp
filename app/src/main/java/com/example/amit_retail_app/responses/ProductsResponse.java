@@ -1,5 +1,6 @@
-package com.example.amit_retail_app;
+package com.example.amit_retail_app.responses;
 
+import com.example.amit_retail_app.models.ProductsModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

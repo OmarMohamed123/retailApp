@@ -1,4 +1,4 @@
-package com.example.amit_retail_app;
+package com.example.amit_retail_app.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.amit_retail_app.models.ProductsModel;
+import com.example.amit_retail_app.R;
 
 import java.util.List;
 

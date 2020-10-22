@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.amit_retail_app.ProductsModel;
-import com.example.amit_retail_app.ProductsResponse;
-import com.example.amit_retail_app.ProductsRvAdapter;
+import com.example.amit_retail_app.models.ProductsModel;
+import com.example.amit_retail_app.responses.ProductsResponse;
+import com.example.amit_retail_app.adapters.ProductsRvAdapter;
 import com.example.amit_retail_app.R;
-import com.example.amit_retail_app.RetrofitFactory;
-import com.example.amit_retail_app.WebServices;
+import com.example.amit_retail_app.webServices.RetrofitFactory;
+import com.example.amit_retail_app.webServices.WebServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class HomeFragment extends Fragment {
 
@@ -156,5 +154,7 @@ productRv.setAdapter(adapter);
     }
 
     private int dpToPx(int dp){
-        Resources r=getResources(); return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,r.getDisplayMetrics()));}
+        Resources r=getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,r.getDisplayMetrics()));
+    }
 }

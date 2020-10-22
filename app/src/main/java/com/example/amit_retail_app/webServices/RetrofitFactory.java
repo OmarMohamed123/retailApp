@@ -1,4 +1,4 @@
-package com.example.amit_retail_app;
+package com.example.amit_retail_app.webServices;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
