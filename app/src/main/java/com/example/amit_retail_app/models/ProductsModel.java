@@ -1,17 +1,28 @@
 package com.example.amit_retail_app.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity(tableName = "product")
 public class ProductsModel implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private long incrementalId;
+
     @SerializedName("id")
     private int productId;
 
     @SerializedName("name")
+    @ColumnInfo(name = "details")
     private String details;
 
     @SerializedName("title")
+    @ColumnInfo(name = "title")
     private String title;
 
     @SerializedName("category_id")
@@ -36,13 +47,42 @@ public class ProductsModel implements Serializable {
     private int inStock;
 
     @SerializedName("avatar")
+    @ColumnInfo(name = "photo")
     private String photo;
 
     @SerializedName("price_final")
     private double priceFinal;
 
     @SerializedName("price_final_text")
+    @ColumnInfo(name = "finalPriceText")
     private String finalPriceText;
+
+    @ColumnInfo(name = "quantity")
+    private int quantity;
+
+    public long getIncrementalId() {
+        return incrementalId;
+    }
+
+    public void setIncrementalId(long incrementalId) {
+        this.incrementalId = incrementalId;
+    }
+
+    public long getId() {
+        return incrementalId;
+    }
+
+    public void setId(long incrementalId) {
+        this.incrementalId = incrementalId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public ProductsModel(String details, String title, String photo, String finalPriceText) {
         this.details = details;
@@ -52,11 +92,7 @@ public class ProductsModel implements Serializable {
     }
 
 
-    public ProductsModel(String details, String title, String finalPriceText) {
-        this.details = details;
-        this.title = title;
-        this.finalPriceText = finalPriceText;
-    }
+
 
     public int getProductId() {
         return productId;

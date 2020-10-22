@@ -45,10 +45,10 @@ public class CartRvAdapter extends RecyclerView.Adapter<CartRvAdapter.CartViewHo
         holder.titleTv.setText(productsModel.getTitle());
         holder.detailsTv.setText(productsModel.getDetails());
         holder.priceTv.setText(productsModel.getFinalPriceText());
-        //holder.quantityTv.setText(productsModel.getTitle());
+        holder.quantityTv.setText(productsModel.getQuantity()+"");
 
 
-       // Glide.with(context).load(productsModel.getPhoto()).into(holder.productIv);
+        Glide.with(context).load(productsModel.getPhoto()).into(holder.productIv);
 
     }
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,13 @@ import android.view.ViewGroup;
 
 import com.example.amit_retail_app.R;
 import com.example.amit_retail_app.adapters.CartRvAdapter;
+import com.example.amit_retail_app.asyncTasks.GetProductAsyncTask;
 import com.example.amit_retail_app.models.ProductsModel;
+import com.example.amit_retail_app.room.RoomFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class CartFragment extends Fragment {
@@ -45,28 +49,29 @@ List<ProductsModel>productList=new ArrayList<>();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+   getAllProductsFromDb();
     setUpRecyclerView();
     }
 
-    private void setUpRecyclerView() {
-        ProductsModel productsModel=new ProductsModel("caaadaeeeeeeeeeddddddddddddeeeeeee","sssssssssssssssssss","14 EGP");
-productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
-        productList.add(productsModel);
+    private void getAllProductsFromDb() {
+        try {
+            productList.addAll(new GetProductAsyncTask(RoomFactory.createRoomObject(requireContext()).getProductDao()).execute().get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void setUpRecyclerView() {
 
 
         cartAdapter=new CartRvAdapter(productList,requireContext());
         cartRv.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false));
         cartRv.addItemDecoration(new DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL));
         cartRv.setAdapter(cartAdapter);
+        cartAdapter.notifyDataSetChanged();
+
 
     }
 }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.amit_retail_app.asyncTasks.InsertProductAsyncTask;
 import com.example.amit_retail_app.models.ProductsModel;
 import com.example.amit_retail_app.responses.ProductsResponse;
 import com.example.amit_retail_app.adapters.ProductsRvAdapter;
 import com.example.amit_retail_app.R;
+import com.example.amit_retail_app.room.RoomFactory;
 import com.example.amit_retail_app.webServices.RetrofitFactory;
 import com.example.amit_retail_app.webServices.WebServices;
 
@@ -100,15 +103,24 @@ RecyclerView.LayoutManager layoutManager=new GridLayoutManager(requireContext(),
 productRv.setLayoutManager(layoutManager);
 productRv.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(16),true));
 productRv.setItemAnimator(new DefaultItemAnimator());
-adapter=new ProductsRvAdapter(productsList,  requireContext(),new ProductsRvAdapter.OnProductClickListener() {
-            @Override
-            public void onProductClick(View view,int position) {
-ProductsModel clickedProduct=productsList.get(position);
-Bundle bundle=new Bundle();
-bundle.putSerializable("clickedProduct",clickedProduct);
-                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_productDetailsFragment,bundle);
-            }
-        });
+adapter=new ProductsRvAdapter(productsList, requireContext(), new ProductsRvAdapter.OnProductClickListener() {
+    @Override
+    public void onProductClick(View view, int position) {
+        ProductsModel clickedProduct = productsList.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("clickedProduct", clickedProduct);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle);
+    }
+}, new ProductsRvAdapter.onAddProductClickListener() {
+    @Override
+    public void onAddProductClickListener(View view, int position) {
+
+        ProductsModel clickedProduct=productsList.get(position);
+        clickedProduct.setQuantity(1);
+        new InsertProductAsyncTask(RoomFactory.createRoomObject(requireContext()).getProductDao()).execute(clickedProduct);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_cartFragment2);
+    }
+});
 
 
 

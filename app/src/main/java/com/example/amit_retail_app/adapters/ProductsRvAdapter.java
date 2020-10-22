@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,18 +20,26 @@ import java.util.List;
 public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.ProductsRvViewHolder> {
 
     private List<ProductsModel> productsList;
-    private OnProductClickListener onProductClickListener;
     private Context context;
+    private OnProductClickListener onProductClickListener;
+    private onAddProductClickListener onAddProductClickListener;
+
+    public ProductsRvAdapter(List<ProductsModel> productsList, Context context, OnProductClickListener onProductClickListener, ProductsRvAdapter.onAddProductClickListener onAddProductClickListener) {
+        this.productsList = productsList;
+        this.context = context;
+        this.onProductClickListener = onProductClickListener;
+        this.onAddProductClickListener = onAddProductClickListener;
+    }
+
+    public interface onAddProductClickListener{
+        void onAddProductClickListener(View view, int position);
+    }
 
     public interface OnProductClickListener{
         void onProductClick(View view, int position);
     }
 
-    public ProductsRvAdapter(List<ProductsModel> productsList,Context context, OnProductClickListener onProductClickListener ) {
-        this.productsList = productsList;
-        this.onProductClickListener = onProductClickListener;
-        this.context = context;
-    }
+
 
     @NonNull
     @Override
@@ -55,6 +64,13 @@ public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.Pr
                 onProductClickListener.onProductClick(view,holder.getAdapterPosition());
             }
         });
+
+        holder.addProductIb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddProductClickListener.onAddProductClickListener(view,holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -68,6 +84,7 @@ public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.Pr
         TextView titleTv;
         TextView detailsTv;
         TextView priceTv;
+        ImageButton addProductIb;
 
         public ProductsRvViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +92,8 @@ public class ProductsRvAdapter extends RecyclerView.Adapter<ProductsRvAdapter.Pr
             titleTv=itemView.findViewById(R.id.product_title_tv);
             detailsTv=itemView.findViewById(R.id.product_details_tv);
             priceTv=itemView.findViewById(R.id.product_price_tv);
+            addProductIb=itemView.findViewById(R.id.add_product_ib);
+
         }
     }
 }
